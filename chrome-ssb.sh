@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # White Space Trimming: http://codesnippets.joyent.com/posts/show/1816
 trim() {
   local var=$1
@@ -9,20 +8,29 @@ trim() {
   /bin/echo -n "$var"
 }
 
+if [ "$1" == "--help" ] ; then
+  /bin/echo "chrome-ssb can be run with either no arguments or the following: <app-name> <app-url> <full-path-to-icon>"
+  exit 0
+fi
 
-### Get Input
-/bin/echo "What should the Application be called?"
-read inputline
-name=`trim "$inputline"`
+if [ $# -eq 3 ] ; then
+  name=$1
+  url=$2
+  icon=$3
+else
+  ### Get Input
+  /bin/echo "What should the Application be called?"
+  read inputline
+  name=`trim "$inputline"`
 
-/bin/echo "What is the url (e.g. https://www.google.com/calendar/render)?"
-read inputline
-url=`trim "$inputline"`
+  /bin/echo "What is the url (e.g. https://www.google.com/calendar/render)?"
+  read inputline
+  url=`trim "$inputline"`
 
-/bin/echo "What is the full path to the icon (e.g. /Users/username/Desktop/icon.png)?"
-read inputline
-icon=`trim "$inputline"`
-
+  /bin/echo "What is the full path to the icon (e.g. /Users/username/Desktop/icon.png)?"
+  read inputline
+  icon=`trim "$inputline"`
+fi
 
 #### Find Chrome. If its not in the standard spot, try using spotlight.
 chromePath="/Applications/Google Chrome.app"
